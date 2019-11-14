@@ -1,5 +1,5 @@
-#ifndef TIMER_H
-#define TIMER_H
+// Copyright 2019 zhaofeng-shu33
+#pragma once
 
 // Walltime timer
 class Timer {
@@ -12,5 +12,3 @@ class Timer {
 
   static Timer* NewTimer();
 };
-
-#endif

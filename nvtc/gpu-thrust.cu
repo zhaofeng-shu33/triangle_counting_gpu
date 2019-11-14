@@ -1,3 +1,4 @@
+// Copyright 2019 zhaofeng-shu33
 #include "gpu-thrust.h"
 
 #include <thrust/device_ptr.h>

@@ -1,3 +1,4 @@
+// Copyright 2019 zhaofeng-shu33
 #include "timer.h"
 
 #include <chrono>

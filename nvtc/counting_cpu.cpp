@@ -1,3 +1,4 @@
+// Copyright 2019 zhaofeng-shu33
 #include "counting_cpu.h"
 uint64_t CpuForward(int* edges, int node_num, uint64_t edge_num) {
    uint64_t m = edge_num;

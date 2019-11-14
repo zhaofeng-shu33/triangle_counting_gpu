@@ -1,3 +1,4 @@
+// Copyright 2019 zhaofeng-shu33
 #include "counting_gpu.h"
 
 #include "gpu-thrust.h"

@@ -1,3 +1,4 @@
+// Copyright 2019 zhaofeng-shu33
 #ifndef GPU_THRUST_H
 #define GPU_THRUST_H
 
