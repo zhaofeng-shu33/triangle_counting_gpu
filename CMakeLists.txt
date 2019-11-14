@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.12)
 option(V2 "v2" OFF)
 option(TIMECOUNTING "counting time used" OFF)
 option(CODEGPU "codes can be run on GPU" ON)
