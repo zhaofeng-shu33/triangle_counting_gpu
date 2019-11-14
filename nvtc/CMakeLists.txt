@@ -1,11 +1,11 @@
 if(CODEGPU)
-    add_library(nvtc_variant_cu gpu.cu gpu-thrust.cu)
+    add_library(nvtc_variant_cu counting_gpu.cu gpu-thrust.cu)
     if("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
         target_compile_options(nvtc_variant_cu PRIVATE "-G")
         target_compile_options(nvtc_variant_cu PRIVATE "-O0")
     endif()
 endif()
-add_library(nvtc_variant graph.cpp timer.cpp counting_cpu.cpp)
+add_library(nvtc_variant io.cpp timer.cpp counting_cpu.cpp)
 
 if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(nvtc_variant PRIVATE --coverage)

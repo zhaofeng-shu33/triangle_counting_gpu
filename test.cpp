@@ -4,8 +4,10 @@
 
 #include <gtest/gtest.h>  // NOLINT(build/include_order)
 
-#include "nvtc/graph.h"
-#include "nvtc/gpu.h"
+#include "nvtc/io.h"
+#if GPU
+#include "nvtc/counting_gpu.h"
+#endif
 #include "nvtc/counting_cpu.h"
 
 TEST(split, array) {

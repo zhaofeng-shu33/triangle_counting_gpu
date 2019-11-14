@@ -1,7 +1,7 @@
 #ifndef GPU_H
 #define GPU_H
 
-#include "graph.h"
+#include "nvtc/io.h"
 #include <stdint.h>
 
 void PreInitGpuContext(int device = 0);

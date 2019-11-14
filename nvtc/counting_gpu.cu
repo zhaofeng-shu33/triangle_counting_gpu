@@ -1,4 +1,4 @@
-#include "gpu.h"
+#include "counting_gpu.h"
 
 #include "gpu-thrust.h"
 #include "timer.h"

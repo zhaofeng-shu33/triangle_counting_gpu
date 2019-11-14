@@ -1,13 +1,14 @@
-#include "gpu.h"
-#include "graph.h"
-#include "timer.h"
-#include "counting_cpu.h"
 #include <cstring>
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <vector>
+
+#include "io.h"
+#include "counting_gpu.h"
+#include "timer.h"
+#include "counting_cpu.h"
 
 using namespace std;
 
