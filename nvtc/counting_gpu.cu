@@ -73,6 +73,7 @@ uint64_t CalculateTriangleSplitCPU(int edge_len,
     int i, int j) {
     uint64_t count = 0;
     // itering over edges_i
+#pragma omp parallel for reduction(+:count)
     for (uint64_t r = 0; r < edge_len; r++) {
       int u = edges[r], v = edges[r + edge_len];
       if (nodes[u] >= dev_node_index[i+1] ||
@@ -98,6 +99,7 @@ uint64_t CalculateTriangleSplitCPU(int edge_len,
     }
     return count;
 }
+
 __global__ void CalculateTriangleSplit(int edge_len,
     const int* __restrict__ edges, const int* __restrict__ edges_i,
     const int* __restrict__ edges_j, const uint64_t* __restrict__ nodes,
