@@ -271,8 +271,3 @@ uint64_t MultiGpuForward(int* edges, int device_count, int num_nodes,
 #endif
     return result;
 }
-
-void PreInitGpuContext(int device) {
-    CUCHECK(cudaSetDevice(device));
-    CUCHECK(cudaFree(NULL));
-}
