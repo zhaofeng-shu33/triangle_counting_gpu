@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 #if TIMECOUNTING
-    unique_ptr<Timer> t(Timer::NewTimer());
+    std::unique_ptr<Timer> t(Timer::NewTimer());
 #endif
     const char* io_hint = std::getenv("DATAIO");
     const char* device_hint = std::getenv("DEVICEHINT");
