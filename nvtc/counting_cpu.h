@@ -1,5 +1,8 @@
 // Copyright 2019 zhaofeng-shu33
 #pragma once
+/// \file
+/// \brief cpu counting method
+///
 #include "nvtc/io.h"
 
 //! get the number of triangles in the graph, represented by edges

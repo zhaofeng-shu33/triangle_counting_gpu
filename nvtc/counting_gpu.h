@@ -1,6 +1,8 @@
 // Copyright 2019 zhaofeng-shu33
 #pragma once
-
+/// \file
+/// \brief gpu counting method
+///
 #include <stdint.h>
 
 #include "nvtc/io.h"
