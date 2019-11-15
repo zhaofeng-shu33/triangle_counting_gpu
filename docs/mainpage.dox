@@ -1,0 +1,15 @@
+/**
+\mainpage 
+
+\section Introduction
+
+<b>nvtc</b> is triangle counting C++ library powered by Nvidia GPU.
+You are free to use it in your commercial or
+non-commercial applications under very permissive
+\ref nvtclicense "license terms".
+
+
+The project is maintained by 
+<a href="https://github.com/zhaofeng-shu33">zhaofeng-shu33</a>.
+
+*/
