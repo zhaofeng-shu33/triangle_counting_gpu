@@ -41,7 +41,7 @@ a = sparse.csr_matrix(([1]*8, [0,1,1,2,2,3,3,4], [0,0,1,2,4,6,8]), shape=(6,6))
 print(a)
 ```
 ### Data exchange between Host and Device Memory
-![svg](method.svg)
+![png](method.png)
 
 For very large graphs, device memory is limited and is unable to store the data of whole graph.
 To use GPU in such case. We maintain the whole graph in Host memory and transfers partial data to host memory for 
