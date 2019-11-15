@@ -1,15 +1,16 @@
 // Copyright 2019 zhaofeng-shu33
+#include <string.h>
+#include <assert.h>
+#include <stdlib.h>
+
+#include <memory>
+#include <iostream>
+#include <vector>
+
 #include "nvtc/io.h"
 #include "nvtc/counting_gpu.h"
 #include "nvtc/timer.h"
 #include "nvtc/counting_cpu.h"
-
-#include <memory>
-#include <cstring>
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
 
 int main(int argc, char *argv[]) {
     if (argc != 3 || strcmp(argv[1], "-f") != 0) {
@@ -39,7 +40,8 @@ int main(int argc, char *argv[]) {
        result = GpuForward(edges, info_pair.first, info_pair.second);
     } else if (strcmp(device_hint, "GPUSPLIT") == 0) {
         int split_num = GetSplitNum(info_pair.first, info_pair.second);
-        result = GpuForwardSplit(edges, info_pair.first, info_pair.second, split_num);
+        result = GpuForwardSplit(edges, info_pair.first,
+            info_pair.second, split_num);
     } else if (strcmp(device_hint, "CPU") == 0) {
         result = CpuForward(edges, info_pair.first, info_pair.second);
     } else {
