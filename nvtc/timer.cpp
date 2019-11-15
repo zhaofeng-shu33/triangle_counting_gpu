@@ -1,9 +1,8 @@
 // Copyright 2019 zhaofeng-shu33
-#include "timer.h"
+#include "nvtc/timer.h"
 
-#include <chrono>
+#include <chrono>  // NOLINT(build/c++11)
 #include <iostream>
-using namespace std;
 
 namespace {
 class TimerImpl : public Timer {
@@ -13,9 +12,10 @@ class TimerImpl : public Timer {
 
   virtual int Done(const char* label) {
     Clock::time_point now = Clock::now();
-    int res = chrono::duration_cast<chrono::milliseconds>(now - last).count();
+    using std::chrono::duration_cast;
+    int res = duration_cast<std::chrono::milliseconds>(now - last).count();
     last = now;
-    cerr << label << " " << res << " ms" << endl;
+    std::cout << label << " " << res << " ms" << std::endl;
     return res;
   }
 

@@ -1,5 +1,5 @@
 // Copyright 2019 zhaofeng-shu33
-#include "gpu-thrust.h"
+#include "nvtc/gpu-thrust.h"
 
 #include <thrust/device_ptr.h>
 #include <thrust/functional.h>
@@ -12,8 +12,8 @@ int NumVerticesGPU(int m, int* edges) {
 }
 
 void SortEdges(int m, int* edges) {
-  thrust::device_ptr<uint64_t> ptr((uint64_t*)edges);
-  thrust::sort(ptr, ptr + m);
+  thrust::device_ptr<uint64_t> ptr(reinterpret_cast<uint64_t*>(edges));
+  thrust::sort(ptr, ptr + m);  // NOLINT(build/include_what_you_use)
 }
 
 uint64_t SumResults(int size, uint64_t* results) {
