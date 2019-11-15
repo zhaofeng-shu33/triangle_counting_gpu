@@ -1,13 +1,15 @@
 // Copyright 2019 zhaofeng-shu33
 #pragma once
+/// \file
+/// \brief time utility
 
-// Walltime timer
+
+//! \brief: timer
 class Timer {
  public:
   virtual ~Timer() {}
 
-  // Returns number of milliseconds since the last call to Done, Reset, or
-  // constructor and prints it with label to stderr.
+  //! \brief: Returns number of milliseconds since the last call to Done
   virtual int Done(const char* label) = 0;
 
   static Timer* NewTimer();

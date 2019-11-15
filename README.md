@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/zhaofeng-shu33/triangle_counting_gpu.svg?branch=master)](https://travis-ci.com/zhaofeng-shu33/triangle_counting_gpu)
 [![codecov](https://codecov.io/gh/zhaofeng-shu33/triangle_counting_gpu/branch/master/graph/badge.svg)](https://codecov.io/gh/zhaofeng-shu33/triangle_counting_gpu)
+[![Documentation Status](https://readthedocs.org/projects/triangle-counting-gpu/badge/?version=latest)](https://triangle-counting-gpu.readthedocs.io/en/latest/?badge=latest)
 
 Triangles Counting in CUDA GPU
 =========

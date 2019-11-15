@@ -1,9 +1,9 @@
 // Copyright 2019 zhaofeng-shu33
 #pragma once
+/// \file
+/// \brief utility function using [thrust](https://docs.nvidia.com/cuda/thrust/index.html) library
 
 #include <stdint.h>
 
-int NumVerticesGPU(int m, int* edges);
-void SortEdges(int m, int* edges);
-void RemoveMarkedEdges(int m, int *edges, bool* flags);
+//! get the summation of results
 uint64_t SumResults(int size, uint64_t* results);

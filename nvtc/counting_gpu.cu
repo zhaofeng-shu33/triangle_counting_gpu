@@ -237,8 +237,6 @@ uint64_t MultiGpuForward(int* edges, int device_count, int num_nodes,
         dev_temp, edges, m * 2 * sizeof(int), cudaMemcpyHostToDevice));
     CUCHECK(cudaDeviceSynchronize());
     // Memcpy edges from host to device
-    SortEdges(m, dev_temp);
-    CUCHECK(cudaDeviceSynchronize());
     // Sort edges
     CUCHECK(cudaMalloc(&dev_edges, m * 2 * sizeof(int)));
     UnzipEdges<<<NUM_BLOCKS, NUM_THREADS>>>(m, dev_temp, dev_edges);
