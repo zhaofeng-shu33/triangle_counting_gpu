@@ -10,7 +10,7 @@ addons:
 install:
   - pip install --user cpplint
 script:
-  - cpplint test.cpp
+  - cpplint test.cpp nvtc/*
   - mkdir build
   - python graph_generator.py
   - cd build

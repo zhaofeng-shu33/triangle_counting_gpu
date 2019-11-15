@@ -21,7 +21,7 @@ uint64_t get_edge(std::ifstream& fin) {
     return edge_size / 8;
 }
 uint64_t get_split(uint64_t* arr, int arr_len, int split_num,
-    uint64_t*& out_arr) {
+    uint64_t*& out_arr) {  // NOLINT(runtime/references)
     out_arr = new uint64_t[split_num + 1];
     int counter = 0;
     uint64_t max_num = arr[arr_len - 1];
@@ -39,7 +39,7 @@ uint64_t get_split(uint64_t* arr, int arr_len, int split_num,
     return max_num;
 }
 // swap_array(arr = {1,2,3,4,5,6},3) -> arr = {1,3,5,2,4,6}
-void swap_array(int*& arr, uint64_t arr_len_2) {
+void swap_array(int* arr, uint64_t arr_len_2) {
     uint64_t empty_pos = 1;
     for (uint64_t i = 1; i < arr_len_2; i++) {
         std::swap(arr[empty_pos], arr[2 * i]);
@@ -50,7 +50,7 @@ void swap_array(int*& arr, uint64_t arr_len_2) {
 
 //! V2 allows node with zero degree
 std::pair<int, uint64_t> read_binfile_to_arclist(const char* file_name,
-    int*& arcs) {
+    int*& arcs) {  // NOLINT(runtime/references)
     std::ifstream fin;
     fin.open(file_name, std::ifstream::binary | std::ifstream::in);
     uint64_t file_size = get_edge(fin);
