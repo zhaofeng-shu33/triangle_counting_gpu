@@ -15,6 +15,8 @@
 #define NUM_THREADS 64
 #define NUM_BLOCKS_GENERIC 112
 #define NUM_BLOCKS_PER_MP 8
+uint64_t MultiGpuForward(int* edges, int device_count, int num_nodes,
+    uint64_t num_edges);
 
 template<bool ZIPPED>
 __global__ void CalculateNodePointers(int n, int m, int* edges, int* nodes) {
