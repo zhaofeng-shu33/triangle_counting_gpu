@@ -40,10 +40,8 @@ uint64_t get_split(uint64_t* arr, int arr_len, int split_num,
 }
 // swap_array(arr = {1,2,3,4,5,6},3) -> arr = {1,3,5,2,4,6}
 void swap_array(int* arr, uint64_t arr_len) {
-    uint64_t empty_pos = 1;
     for (uint64_t i = 1; i < arr_len; i++) {
-        std::swap(arr[empty_pos], arr[2 * i]);
-        empty_pos++;
+        std::swap(arr[i], arr[2 * i]);
     }
     std::sort(arr + arr_len, arr + 2 * arr_len);
 }
