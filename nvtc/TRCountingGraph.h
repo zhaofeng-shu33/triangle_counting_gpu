@@ -13,36 +13,36 @@
 #include <mutex>
 
 class TRCountingGraph{
-	public:
-		// Construct Function
-		TRCountingGraph(const char* file_name);
-		
-		//Query arc exist using go-through check.
-		bool arc_exist(int u, int v);
+    public:
+        // Construct Function
+        TRCountingGraph(const char* file_name);
+        
+        //Query arc exist using go-through check.
+        bool arc_exist(int u, int v);
 
-		//Query arc exist using binary search.
-		bool arc_exist_sorted(int u, int v);
+        //Query arc exist using binary search.
+        bool arc_exist_sorted(int u, int v);
 
-		// node ID -> neighboor table offset from int* neighboor.
-		int64_t* offset;
+        // node ID -> neighboor table offset from int* neighboor.
+        int64_t* offset;
 
-		// node ID -> Node degree.
-		int* degree;
+        // node ID -> Node degree.
+        int* degree;
 
-		// neighboor table starting address
-		int* neighboor;
-		int* neighboor_start;
+        // neighboor table starting address
+        int* neighboor;
+        int* neighboor_start;
 
-		// maximum node id
-		int64_t nodeid_max;
+        // maximum node id
+        int64_t nodeid_max;
 
-		// total number of edges
-		int64_t edge_num;
+        // total number of edges
+        int64_t edge_num;
 
-		//mutex* lock;
-		std::mutex fin_lock;
+        //mutex* lock;
+        std::mutex fin_lock;
 
-	private:
-		void sort_neighboor(int* d);
-		bool inner_arc_exist(int u, int v, int* d);
+    private:
+        void sort_neighboor(int* d);
+        bool inner_arc_exist(int u, int v, int* d);
 };
