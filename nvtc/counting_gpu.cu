@@ -66,40 +66,6 @@ __global__ void CalculateTriangles(int m,
     results[blockDim.x * blockIdx.x + threadIdx.x] = count;
 }
 
-uint64_t CalculateTriangleSplitCPU(int edge_len,
-    const int* edges, const int* edges_i,
-    const int* edges_j, const uint64_t* nodes,
-    const uint64_t* dev_node_index,
-    int i, int j) {
-    uint64_t count = 0;
-    // itering over edges_i
-#pragma omp parallel for reduction(+:count)
-    for (uint64_t r = 0; r < edge_len; r++) {
-      int u = edges[r], v = edges[r + edge_len];
-      if (nodes[u] >= dev_node_index[i+1] ||
-          nodes[u + 1] < dev_node_index[i] ||
-          nodes[v] >= dev_node_index[j + 1] ||
-          nodes[v + 1] < dev_node_index[j])
-          continue;
-      uint64_t u_it = nodes[u] - dev_node_index[i];
-      uint64_t u_end = nodes[u + 1] - dev_node_index[i];
-      uint64_t v_it = nodes[v] - dev_node_index[j];
-      uint64_t v_end = nodes[v + 1] - dev_node_index[j];
-      // if u_it or v_it not in edges, continue the loop
-      int a = edges_i[u_it], b = edges_j[v_it];
-      while (u_it < u_end && v_it < v_end) {
-          int d = a - b;
-          if (d <= 0)
-              a = edges_i[++u_it];
-          if (d >= 0)
-              b = edges_j[++v_it];
-          if (d == 0)
-              ++count;
-      }
-    }
-    return count;
-}
-
 __global__ void CalculateTriangleSplit(int edge_len,
     const int* __restrict__ edges, const int* __restrict__ edges_i,
     const int* __restrict__ edges_j, const uint64_t* __restrict__ nodes,
