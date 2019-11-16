@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     unique_ptr<Timer> t(Timer::NewTimer());
 #endif
 #if SECONDVERSION
-    MyGraph myGraph(argv[2]);
+    TRCountingGraph TRCountingGraph(argv[2]);
 #else    
     const char* io_hint = std::getenv("DATAIO");
     const char* device_hint = std::getenv("DEVICEHINT");
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     uint64_t result = 0;
     t->Done("Reading Data");
 #if SECONDVERSION
-    result = GpuForward_v2(myGraph);
+    result = GpuForward_v2(TRCountingGraph);
 #else
 #if GPU
     if(device_hint == NULL || strcmp(device_hint, "GPU") == 0){

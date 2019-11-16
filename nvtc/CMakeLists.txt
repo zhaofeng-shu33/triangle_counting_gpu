@@ -7,7 +7,7 @@ else()
     target_compile_options(nvtc_variant_cu PRIVATE "-O2")
 endif()
 
-add_library(nvtc_variant graph.cpp timer.cpp mygraph.cpp counting_cpu.cpp)
+add_library(nvtc_variant graph.cpp timer.cpp TRCountingGraph.cpp counting_cpu.cpp)
 if(OPENMP AND UNIX)
     target_compile_definitions(nvtc_variant PUBLIC "-D_GLIBCXX_PARALLEL")
 endif()

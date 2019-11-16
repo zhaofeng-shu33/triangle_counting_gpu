@@ -11,7 +11,7 @@
 #include <iostream>
 #include <vector>
 
-#include "MyGraph.h"
+#include "TRCountingGraph.h"
 using namespace std;
 
 #define NUM_THREADS 64
@@ -226,26 +226,26 @@ uint64_t GpuForward(int* edges, int num_nodes, uint64_t num_edges) {
   return MultiGpuForward(edges, 1, num_nodes, num_edges);
 }
 
-uint64_t GpuForward_v2(const MyGraph& myGraph){
+uint64_t GpuForward_v2(const TRCountingGraph& TRCountingGraph){
     int64_t* dev_offset;
     int* dev_neighbor;
     int* dev_length;
     int* dev_neighbor_start;
-    CUCHECK(cudaMalloc(&dev_offset, (myGraph.nodeid_max + 2) * sizeof(int64_t)));
+    CUCHECK(cudaMalloc(&dev_offset, (TRCountingGraph.nodeid_max + 2) * sizeof(int64_t)));
     CUCHECK(cudaMemcpyAsync(
-       dev_offset, myGraph.offset, (myGraph.nodeid_max + 2) * sizeof(int64_t), cudaMemcpyHostToDevice));
+       dev_offset, TRCountingGraph.offset, (TRCountingGraph.nodeid_max + 2) * sizeof(int64_t), cudaMemcpyHostToDevice));
     CUCHECK(cudaDeviceSynchronize());
-    CUCHECK(cudaMalloc(&dev_length, (myGraph.nodeid_max + 1) * sizeof(int)));
+    CUCHECK(cudaMalloc(&dev_length, (TRCountingGraph.nodeid_max + 1) * sizeof(int)));
     CUCHECK(cudaMemcpyAsync(
-      dev_length, myGraph.degree, (myGraph.nodeid_max + 1) * sizeof(int), cudaMemcpyHostToDevice));
+      dev_length, TRCountingGraph.degree, (TRCountingGraph.nodeid_max + 1) * sizeof(int), cudaMemcpyHostToDevice));
     CUCHECK(cudaDeviceSynchronize());
-    CUCHECK(cudaMalloc(&dev_neighbor, ( myGraph.edge_num) * sizeof(int)));
+    CUCHECK(cudaMalloc(&dev_neighbor, ( TRCountingGraph.edge_num) * sizeof(int)));
     CUCHECK(cudaMemcpyAsync(
-       dev_neighbor, myGraph.neighboor, ( myGraph.edge_num) * sizeof(int), cudaMemcpyHostToDevice));
+       dev_neighbor, TRCountingGraph.neighboor, ( TRCountingGraph.edge_num) * sizeof(int), cudaMemcpyHostToDevice));
     CUCHECK(cudaDeviceSynchronize());
-    CUCHECK(cudaMalloc(&dev_neighbor_start, ( myGraph.edge_num) * sizeof(int)));
+    CUCHECK(cudaMalloc(&dev_neighbor_start, ( TRCountingGraph.edge_num) * sizeof(int)));
     CUCHECK(cudaMemcpyAsync(
-       dev_neighbor_start, myGraph.neighboor_start, ( myGraph.edge_num) * sizeof(int), cudaMemcpyHostToDevice));
+       dev_neighbor_start, TRCountingGraph.neighboor_start, ( TRCountingGraph.edge_num) * sizeof(int), cudaMemcpyHostToDevice));
     CUCHECK(cudaDeviceSynchronize());
     const int NUM_BLOCKS = NUM_BLOCKS_PER_MP * NumberOfMPs();	
     uint64_t* dev_results;
@@ -255,7 +255,7 @@ uint64_t GpuForward_v2(const MyGraph& myGraph){
     cudaSetDevice(0);
     cudaFuncSetCacheConfig(CalculateTriangles_v2, cudaFuncCachePreferL1);
     CalculateTriangles_v2<<<NUM_BLOCKS, NUM_THREADS>>>(
-        myGraph.offset[myGraph.nodeid_max+1], dev_neighbor, dev_offset, dev_length, dev_neighbor_start, dev_results);
+        TRCountingGraph.offset[TRCountingGraph.nodeid_max+1], dev_neighbor, dev_offset, dev_length, dev_neighbor_start, dev_results);
     CUCHECK(cudaDeviceSynchronize());
     uint64_t result = SumResults(NUM_BLOCKS * NUM_THREADS, dev_results);
     return result;
