@@ -211,6 +211,7 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
                 result += SumResults(NUM_BLOCKS * NUM_THREADS, dev_results);
             }
     cpu_computation.join();
+    result += cpu_result;
 #if TIMECOUNTING
     timer->Done("Calculate triangles used time: ");
 #endif
