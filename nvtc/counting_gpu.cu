@@ -185,8 +185,8 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
     CUCHECK(cudaMemcpy(dev_node_index, node_index,
         (split_num + 1)* sizeof(uint64_t), cudaMemcpyHostToDevice));
     for (int t = 0; t < split_num; t++)
-        for (int i = 0; i < split_num; i++)
             for (int j = 0; j < split_num; j++) {
+                int i = t;
                 uint64_t data_offset = node_index[t + 1] - node_index[t];
                 CUCHECK(cudaMemcpy(dev_edges, edges + node_index[t],
                     sizeof(int) * data_offset, cudaMemcpyHostToDevice));
