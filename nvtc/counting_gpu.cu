@@ -187,7 +187,7 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
     CUCHECK(cudaMemcpy(dev_node_index, node_index,
         (split_num + 1)* sizeof(uint64_t), cudaMemcpyHostToDevice));
     uint64_t cpu_result;
-    std::thread cpu_computation(CalculateTrianglesSplitCPU, edges, host_nodes, 0, node_index[1], cpu_result);    
+    std::thread cpu_computation(CalculateTrianglesSplitCPU, edges, host_nodes, (uint64_t)0, node_index[1], std::ref(cpu_result));    
     for (int t = 1; t < split_num; t++)
         for (int i = 0; i < split_num; i++)
             for (int j = 0; j < split_num; j++) {
