@@ -6,6 +6,8 @@ option(TRCOUNTING "counting the number of triangles" ON)
 option(VERBOSE "verbose mode" OFF)
 option(OPENMP "use openmp" ON)
 option(CODE_COVERAGE "Enable coverage reporting" OFF)
+option(SORTPARALLEL "parallel gnu sort" ON)
+
 if(CODEGPU)
   project(triangle_counting_gpu_variant CUDA CXX)
 else()

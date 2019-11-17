@@ -25,7 +25,8 @@ uint64_t get_split(uint64_t* arr, int arr_len, int split_num,
     out_arr = new uint64_t[split_num + 1];
     int counter = 0;
     uint64_t max_num = arr[arr_len - 1];
-    for (int i = 0; i < split_num; i++) {
+    out_arr[0] = 0;
+    for (int i = 1; i < split_num; i++) {
         while (arr[counter] < i * max_num / split_num)
             counter++;
         out_arr[i] = arr[counter];
