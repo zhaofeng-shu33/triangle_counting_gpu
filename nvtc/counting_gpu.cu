@@ -8,9 +8,11 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <thread>  // NOLINT(build/c++11)
 
 #include "nvtc/gpu-thrust.h"
 #include "nvtc/timer.h"
+#include "nvtc/counting_cpu.h"
 
 #define NUM_THREADS 64
 #define NUM_BLOCKS_GENERIC 112
@@ -184,7 +186,10 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
     CUCHECK(cudaMalloc(&dev_node_index, (split_num + 1) * sizeof(uint64_t)));
     CUCHECK(cudaMemcpy(dev_node_index, node_index,
         (split_num + 1)* sizeof(uint64_t), cudaMemcpyHostToDevice));
-    for (int t = 0; t < split_num; t++)
+    uint64_t cpu_result;
+    std::thread cpu_computation(CalculateTrianglesSplitCPU, m, edges,
+        host_nodes, (uint64_t)0, node_index[1], std::ref(cpu_result));
+    for (int t = 1; t < split_num; t++)
             for (int j = 0; j < split_num; j++) {
                 int i = t;
                 uint64_t data_offset = node_index[t + 1] - node_index[t];
@@ -206,6 +211,8 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
                 // Reduce
                 result += SumResults(NUM_BLOCKS * NUM_THREADS, dev_results);
             }
+    cpu_computation.join();
+    result += cpu_result;
 #if TIMECOUNTING
     timer->Done("Calculate triangles used time: ");
 #endif

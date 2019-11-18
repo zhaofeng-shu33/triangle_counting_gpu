@@ -37,11 +37,12 @@ int main(int argc, char *argv[]) {
 #endif
 #if GPU
     if (device_hint == NULL || strcmp(device_hint, "GPU") == 0) {
-       result = GpuForward(edges, info_pair.first, info_pair.second);
-    } else if (strcmp(device_hint, "GPUSPLIT") == 0) {
         int split_num = GetSplitNum(info_pair.first, info_pair.second);
-        result = GpuForwardSplit(edges, info_pair.first,
-            info_pair.second, split_num);
+        if (split_num == 1)
+            result = GpuForward(edges, info_pair.first, info_pair.second);
+        else
+            result = GpuForwardSplit(edges, info_pair.first,
+                info_pair.second, split_num);
     } else if (strcmp(device_hint, "CPU") == 0) {
         result = CpuForward(edges, info_pair.first, info_pair.second);
     } else {
