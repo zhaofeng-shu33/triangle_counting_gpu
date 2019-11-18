@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 #if GPU
     if (device_hint == NULL || strcmp(device_hint, "GPU") == 0) {
         int split_num = GetSplitNum(info_pair.first, info_pair.second);
-        if(split_num == 1)
+        if (split_num == 1)
             result = GpuForward(edges, info_pair.first, info_pair.second);
         else
             result = GpuForwardSplit(edges, info_pair.first,

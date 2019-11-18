@@ -34,8 +34,9 @@ uint64_t CpuForward(int* edges, int node_num, uint64_t edge_num) {
     return count;
 }
 
-void CalculateTrianglesSplitCPU(uint64_t edge_num, int* edges, uint64_t* dev_nodes,
-    uint64_t start_range, uint64_t end_range, uint64_t& count_ret) {
+void CalculateTrianglesSplitCPU(uint64_t edge_num, int* edges,
+    uint64_t* dev_nodes, uint64_t start_range, uint64_t end_range,
+     uint64_t& count_ret) {  // NOLINT(runtime/references)
     // Calculate Triangles
     uint64_t count = 0;
     uint64_t m = edge_num;
