@@ -190,8 +190,8 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
     std::thread cpu_computation(CalculateTrianglesSplitCPU, m, edges,
         host_nodes, (uint64_t)0, node_index[1], std::ref(cpu_result));
     for (int t = 1; t < split_num; t++)
-        for (int i = 0; i < split_num; i++)
             for (int j = 0; j < split_num; j++) {
+                int i = t;
                 uint64_t data_offset = node_index[t + 1] - node_index[t];
                 CUCHECK(cudaMemcpy(dev_edges, edges + node_index[t],
                     sizeof(int) * data_offset, cudaMemcpyHostToDevice));
@@ -205,8 +205,8 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
                     sizeof(int) * (node_index[j + 1] - node_index[j]),
                     cudaMemcpyHostToDevice));
                 CalculateTriangleSplit<<<NUM_BLOCKS, NUM_THREADS>>>(
-                    data_offset, dev_edges, dev_edges_i, dev_edges_j,
-                    dev_nodes, dev_results, dev_node_index, i, j);
+                    data_offset, dev_edges, dev_edges_j, dev_edges_i,
+                    dev_nodes, dev_results, dev_node_index, j, i);
                 CUCHECK(cudaDeviceSynchronize());
                 // Reduce
                 result += SumResults(NUM_BLOCKS * NUM_THREADS, dev_results);
