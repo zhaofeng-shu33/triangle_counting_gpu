@@ -175,7 +175,7 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
     uint64_t* node_index = new uint64_t[split_num + 1];
     uint64_t max_len = get_split(host_nodes, n + 1, split_num, node_index);
     CUCHECK(cudaMalloc(&dev_edges, 2 * sizeof(int) * max_len));
-    CUCHECK(cudaMalloc(&dev_edges_i, sizeof(int) * max_len));
+    dev_edges_i = dev_edges;
     CUCHECK(cudaMalloc(&dev_edges_j, sizeof(int) * max_len));
     uint64_t* dev_results;
     CUCHECK(cudaMalloc(&dev_results,
@@ -198,9 +198,6 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
                 CUCHECK(cudaMemcpy(dev_edges + data_offset,
                     edges + m + node_index[t], sizeof(int) * data_offset,
                     cudaMemcpyHostToDevice));
-                CUCHECK(cudaMemcpy(dev_edges_i, edges + node_index[i],
-                    sizeof(int) * (node_index[i + 1] - node_index[i]),
-                    cudaMemcpyHostToDevice));
                 CUCHECK(cudaMemcpy(dev_edges_j, edges + node_index[j],
                     sizeof(int) * (node_index[j + 1] - node_index[j]),
                     cudaMemcpyHostToDevice));
@@ -218,7 +215,6 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
 #endif
     CUCHECK(cudaFree(dev_results));
     CUCHECK(cudaFree(dev_edges));
-    CUCHECK(cudaFree(dev_edges_i));
     CUCHECK(cudaFree(dev_edges_j));
     CUCHECK(cudaFree(dev_nodes));
 #if TIMECOUNTING
