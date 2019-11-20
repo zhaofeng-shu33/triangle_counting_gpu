@@ -29,7 +29,7 @@ We use CSR sparse matrix format to save the graph in CPU memory.
 ### CSR format storage
 Suppose our graph has m edges and n nodes.
 Two arrays are required, (n+1) length array
-(row array) and (m) length array storing node index. We only store upper trianglar matrix.
+(row array) and (m) length array storing node index. We only store upper triangular matrix.
 
 For example, suppose our graph has (0,1),(1,2),(1,3),(2,3),(2,4),(3,4),(3,5),(4,5).
 n=6,m=8.
@@ -58,7 +58,7 @@ print(a)
  [0 1 1 0 0 0]
  [0 0 1 1 0 0]
  [0 0 0 1 1 0]]
- ```
+```
 
 ### Data exchange between Host and Device Memory
 ![png](method.png)
@@ -66,8 +66,6 @@ print(a)
 For very large graphs, device memory is limited and is unable to store the data of whole graph.
 To use GPU in such case. We maintain the whole graph in host memory and transfers partial data to device memory for 
 computational purpose. To achieve this purpose, three arrays are needed and their partial contents are copied to device memory.
-EdgeList contains all edge pairs and AdjList conconcates adjancy node of each node to a single array.
-To maintain this single array,
-an extra offset array is needed. We use `(t, i, j)` triple to represent the part to be transfered to device memory at each step
-and each number should iterate from 1 to the total split number.
-This illustrative structure is reduncant and can be expressed efficiently in CSR format. 
+EdgeList contains all edge pairs and AdjList concatenates adjacency node of each node to a single array.
+To maintain this single array, an extra offset array is needed. We use `(i, j)` pair to represent the part to be transfered to device memory at each step and each number should iterate from 1 to the total split number.
+This illustrative structure is redundant and can be expressed efficiently in CSR format. 
