@@ -189,15 +189,15 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
     uint64_t cpu_result;
     std::thread cpu_computation(CalculateTrianglesSplitCPU, m, edges,
         host_nodes, (uint64_t)0, node_index[1], std::ref(cpu_result));
-    for (int t = 1; t < split_num; t++)
+    for (int t = 1; t < split_num; t++) {
+            int i = t;
+            uint64_t data_offset = node_index[t + 1] - node_index[t];
+            CUCHECK(cudaMemcpy(dev_edges, edges + node_index[t],
+                sizeof(int) * data_offset, cudaMemcpyHostToDevice));
+            CUCHECK(cudaMemcpy(dev_edges + data_offset,
+                edges + m + node_index[t], sizeof(int) * data_offset,
+                cudaMemcpyHostToDevice));
             for (int j = 0; j < split_num; j++) {
-                int i = t;
-                uint64_t data_offset = node_index[t + 1] - node_index[t];
-                CUCHECK(cudaMemcpy(dev_edges, edges + node_index[t],
-                    sizeof(int) * data_offset, cudaMemcpyHostToDevice));
-                CUCHECK(cudaMemcpy(dev_edges + data_offset,
-                    edges + m + node_index[t], sizeof(int) * data_offset,
-                    cudaMemcpyHostToDevice));
                 CUCHECK(cudaMemcpy(dev_edges_j, edges + node_index[j],
                     sizeof(int) * (node_index[j + 1] - node_index[j]),
                     cudaMemcpyHostToDevice));
@@ -208,6 +208,7 @@ uint64_t GpuForwardSplit(int* edges, int num_nodes, uint64_t num_edges,
                 // Reduce
                 result += SumResults(NUM_BLOCKS * NUM_THREADS, dev_results);
             }
+    }
     cpu_computation.join();
     result += cpu_result;
 #if TIMECOUNTING
