@@ -63,9 +63,9 @@ print(a)
 ### Data exchange between Host and Device Memory
 ![png](method.png)
 
-For very large graphs, device memory is limited and is unable to store the data of whole graph.
-To use GPU in such case. We maintain the whole graph in host memory and transfers partial data to device memory for 
-computational purpose. To achieve this purpose, three arrays are needed and their partial contents are copied to device memory.
-EdgeList contains all edge pairs and AdjList concatenates adjacency node of each node to a single array.
-To maintain this single array, an extra offset array is needed. We use `(i, j)` pair to represent the part to be transfered to device memory at each step and each number should iterate from 1 to the total split number.
-This illustrative structure is redundant and can be expressed efficiently in CSR format. 
+For very large graphs, device memory is limited and is unable to store the data of the whole graph.
+To use GPU in such case. We maintain the whole graph in host memory and transfers partial data to device memory for computational purpose. To achieve this purpose, two arrays are needed and their partial contents are copied to device memory.
+
+EdgeList contains all edge pairs and AdjList concatenates adjacency node index of each node to a single array. To maintain this single array, an extra offset array is needed. This offset array is global and can be put into GPU device memory. We use `(i, j)` pair to represent the part to be transfered to device memory at each step and each number should iterate from 1 to the total split number.
+
+Actually, the illustrative structure in the above picture is redundant and can be expressed efficiently in CSR format. 
