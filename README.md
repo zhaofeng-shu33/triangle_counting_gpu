@@ -4,6 +4,7 @@
 
 Triangles Counting in CUDA GPU
 =========
+Important Notice: the implementation in this repo is not faster than [this one](https://github.com/zhaofeng-shu33/triangle_counting_gpu_v2).
 
 CUDA implementation of parallel algorithm for counting triangles in undirected graphs.
 
